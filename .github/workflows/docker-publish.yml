@@ -14,7 +14,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: ci-php-actions
+  IMAGE_NAME: allopneus/ci-php-actions
 
 jobs:
   # Push image to GitHub Packages.
