@@ -1,4 +1,7 @@
-FROM php:7.2.31-cli
+ARG PHP_VERSION=7.2.31
+
+# CI PHP stage
+FROM php:$PHP_VERSION-cli
 
 # https://getcomposer.org/doc/03-cli.md#composer-auth
 ENV COMPOSER_AUTH=""
@@ -15,7 +18,9 @@ RUN apt install -y \
       zlib1g-dev \
       git \
       curl \
-      libpng-dev ; \
+      libpng-dev \
+      libzip-dev \
+      libonig-dev ; \
     docker-php-ext-install \ 
       curl \ 
       intl \ 
@@ -34,7 +39,7 @@ RUN pecl install -o -f redis-5.0.2 \
   &&  rm -rf /tmp/pear \
   &&  docker-php-ext-enable redis
 
-COPY --from=composer:1.10.8 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.10.9 /usr/bin/composer /usr/bin/composer
 
 RUN composer global require hirak/prestissimo
 
